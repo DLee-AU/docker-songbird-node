@@ -21,7 +21,7 @@ services:
       - DB_DIR=${DB_DIR:-/db}
       - LOG_DIR=${LOG_DIR:-/logs}
       - CHAIN_CONFIG_DIR=${CHAIN_CONFIG_DIR:-/app/.flare/configs}
-      - LOG_LEVEL=${LOG_LEVEL:-DEBUG}
+      - LOG_LEVEL=${LOG_LEVEL:-INFO}
     build:
       context: build
       dockerfile: Dockerfile.coston
