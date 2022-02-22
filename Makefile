@@ -7,9 +7,37 @@
 include make.d/common.mk
 # include make.d/config.mk
 
+.PHONY: check
+check:  ##@Misc	Check for Applicable Files Exist
+	$(QUIET) \
+	if command -v docker > /dev/null 2>&1 || command -v podman > /dev/null 2>&1; then \
+		if command -v docker > /dev/null 2>&1; then \
+			printf "\e[1;33mDocker\e[0m is \e[1;32mDetected\n\n\e[0m"; \
+		fi; \
+		if command -v podman > /dev/null 2>&1; then \
+			printf "\e[1;33mPodman\e[0m is \e[1;32mDetected\n\n\e[0m"; \
+		fi; \
+	else \
+		printf "\e[1;31mDocker\e[0m is \e[1;31mnot on the system\n\e[0m"; \
+		printf "Please Install\n"; \
+	fi
+	$(QUIET) \
+	if command -v docker-compose > /dev/null 2>&1 || command -v podman-compose > /dev/null 2>&1; then \
+		if command -v docker-compose > /dev/null 2>&1; then \
+			printf "\e[1;33mDocker Compose\e[0m is \e[1;32mDetected\n\n\e[0m"; \
+		fi; \
+		if command -v podman-compose > /dev/null 2>&1; then \
+			printf "\e[1;33mPodman Compose\e[0m is \e[1;32mDetected\n\n\e[0m"; \
+		fi; \
+	else \
+		printf "\e[1;31mdocker-compose\e[0m is \e[1;31mnot on the system\n\e[0m"; \
+		printf "\e[1;35mPlease Install\e[0m\n"; \
+	fi
+
+
 .PHONY: flare-repo 
 flare-repo:  ##@Misc	Setup Flare Repo
-	$(QUIET)if [ -d "build/src/flare" ]; then\
+	$(QUIET)if [ -d "build/src/flare/.git" ]; then\
 		git ls-remote build/src/flare -q > /dev/null 2>&1;\
 	else\
 		echo "Cloning";\
@@ -22,7 +50,7 @@ flare-repo:  ##@Misc	Setup Flare Repo
 	fi
 
 .PHONY: coston-build
-coston-build: flare-repo ##@Coston	Build Docker Coston Node Image
+coston-build: check flare-repo ##@Coston	Build Docker Coston Node Image
 	$(QUIET) printf "Docker Build\n"
 	docker-compose -f docker-compose.coston.yml build
 
@@ -52,7 +80,7 @@ coston-clean: ##@Coston	Remove Coston Image
 	docker rmi dulee/flare-node:coston
 
 .PHONY: songbird-build
-songbird-build: flare-repo ##@Songbird	Build Docker Songbird Node Image
+songbird-build: check flare-repo ##@Songbird	Build Docker Songbird Node Image
 	$(QUIET) printf "Docker Build\n"
 	docker-compose -f docker-compose.songbird.yml build
 
