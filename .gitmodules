@@ -1,0 +1,3 @@
+[submodule "build/src/flare"]
+	path = build/src/flare
+	url = https://github.com/flare-foundation/flare

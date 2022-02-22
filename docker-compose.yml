@@ -1,0 +1,64 @@
+version: '3'
+
+services:
+  flare-node-coston:
+    image: flare/flare-node:coston
+    container_name: flare_node_coston
+    hostname: flare_node_coston
+    # restart: unless-stopped
+    restart: on-failure
+    stdin_open: true # docker run -i
+    tty: true        # docker run -t
+    ports:
+      - 19650:9650
+      - 19651:9651
+    environment:
+      - FLARE_NETWORK_ID=${FLARE_NETWORK_ID:-coston}
+      # - HTTP_HOST=${HTTP_HOST:-0.0.0.0}
+      - LISTEN_ADDRESS=0.0.0.0
+      - BOOTSTRAP_IPS=${BOOTSTRAP_IPS:-}
+      - BOOTSTRAP_IDS=${BOOTSTRAP_IDS:-}
+      - DB_DIR=${DB_DIR:-/db}
+      - LOG_DIR=${LOG_DIR:-/logs}
+      - CHAIN_CONFIG_DIR=${CHAIN_CONFIG_DIR:-/app/.flare/configs}
+      - LOG_LEVEL=${LOG_LEVEL:-DEBUG}
+    build:
+      context: build
+      dockerfile: Dockerfile.coston
+    env_file:
+      - ./build/.env.coston
+    volumes:
+      - ${PWD}/db:/db
+      - ${PWD}/logs:/logs
+      - ${PWD}/configs/coston:/app/.flare/configs
+
+  flare-node-songbird:
+    image: flare/flare-node:songbird
+    container_name: flare_node_songbird
+    hostname: flare_node_songbird
+    # restart: unless-stopped
+    restart: on-failure
+    stdin_open: true # docker run -i
+    tty: true        # docker run -t
+    ports:
+      - 29650:9650
+      - 29651:9651
+    environment:
+      - FLARE_NETWORK_ID=${FLARE_NETWORK_ID:-songbird}
+      # - HTTP_HOST=${HTTP_HOST:-0.0.0.0}
+      - LISTEN_ADDRESS=0.0.0.0
+      - BOOTSTRAP_IPS=${BOOTSTRAP_IPS:-}
+      - BOOTSTRAP_IDS=${BOOTSTRAP_IDS:-}
+      - DB_DIR=${DB_DIR:-/db}
+      - LOG_DIR=${LOG_DIR:-/logs}
+      - CHAIN_CONFIG_DIR=${CHAIN_CONFIG_DIR:-/app/.flare/configs}
+      - LOG_LEVEL=${LOG_LEVEL:-INFO}    
+    build:
+      context: build
+      dockerfile: Dockerfile.songbird
+    env_file:
+      - ./build/.env.songbird
+    volumes:
+      - ${PWD}/db:/db
+      - ${PWD}/logs:/logs
+      - ${PWD}/configs:/app/.flare/configs

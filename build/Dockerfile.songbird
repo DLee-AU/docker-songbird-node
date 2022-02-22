@@ -1,0 +1,45 @@
+# syntax=docker/dockerfile:1
+
+ARG FLARE_NETWORK_NAME=songbird
+
+FROM golang:1.17-stretch AS compile-image
+RUN apt-get update
+RUN apt-get install -y --no-install-recommends jq
+
+WORKDIR /app
+
+COPY src/flare/ .
+
+RUN /app/scripts/build.sh
+
+FROM golang:1.17-stretch AS build-image
+
+COPY src/networks/songbird/dotflare /app/.flare
+
+COPY --from=compile-image /usr/bin/jq /usr/bin/jq
+COPY --from=compile-image /usr/lib/x86_64-linux-gnu/libjq.so.1 /usr/lib/x86_64-linux-gnu/libjq.so.1
+COPY --from=compile-image /usr/lib/x86_64-linux-gnu/libonig.so.4 /usr/lib/x86_64-linux-gnu/libonig.so.4
+COPY --from=compile-image /lib/x86_64-linux-gnu/libm.so.6 /lib/x86_64-linux-gnu/libm.so.6
+COPY --from=compile-image /lib/x86_64-linux-gnu/libc.so.6 /lib/x86_64-linux-gnu/libc.so.6
+
+COPY --from=compile-image /app/build /app
+COPY src/networks/songbird/.entrypoint.sh /.entrypoint.sh
+RUN chmod +x /.entrypoint.sh
+
+RUN mkdir /logs
+RUN mkdir /db
+
+WORKDIR /app
+
+ENV FLARE_NETWORK_ID=${NETWORK}
+ENV LISTEN_ADDRESS=0.0.0.0
+ENV BOOTSTRAP_IPS=""
+ENV BOOTSTRAP_IDS=""
+ENV DB_DIR="/db"
+ENV LOG_DIR="/logs"
+ENV CHAIN_CONFIG_DIR="/app/.flare/configs"
+ENV LOG_LEVEL="INFO"
+
+# USER 1000
+
+ENTRYPOINT [ "/.entrypoint.sh" ]
