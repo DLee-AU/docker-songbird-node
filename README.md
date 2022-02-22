@@ -2,6 +2,11 @@
 
 Dockerised Songbird Node
 
+## Prerequisite
+
+* docker
+* docker-compose
+* make
 ## To Use
 
 If in doubt run `make` and it should be self documenting
@@ -38,6 +43,8 @@ You run the stages individually or just run `make coston-up`
 
 ### Coston
 
+If you want to bring it up
+
     > make flare-repo
       ...    
     > make coston-build
@@ -45,13 +52,26 @@ You run the stages individually or just run `make coston-up`
     > make coston-up
       ...
 
+If you want to bring it down
+    
+    > make coston-down
+      ...
+
+
 ### Songbird
+
+If you want to bring it up
 
     > make flare-repo
       ...    
     > make songbird-build
       ...
     > make songbird-up
+      ...
+
+If you want to bring it down
+
+    > make songbird-down
       ...
 
 # Notes
