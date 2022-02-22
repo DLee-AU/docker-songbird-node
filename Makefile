@@ -28,17 +28,27 @@ coston-build: flare-repo ##@Coston	Build Docker Coston Node Image
 
 .PHONY: coston-up
 coston-up: coston-build ##@Coston	Run Docker coston-node
-	$(QUIET) printf "Docker Build\n"
+	$(QUIET) printf "Docker Up\n"
 	docker-compose -f docker-compose.coston.yml up -d
+
+.PHONY: coston-status
+coston-status:  ##@Coston	Run Status songbird-node
+	$(QUIET) printf "Docker Status\n"
+	docker-compose -f docker-compose.coston.yml ps
+
+.PHONY: coston-logs
+coston-logs:  ##@Coston	Run Status songbird-node
+	$(QUIET) printf "Docker Logs\n"
+	docker-compose -f docker-compose.coston.yml logs -f
 
 .PHONY: coston-down
 coston-down: ##@Coston	Bring Coston Node Down
-	$(QUIET) printf "Docker Build\n"
+	$(QUIET) printf "Docker Down\n"
 	docker-compose -f docker-compose.coston.yml down
 
 .PHONY: coston-clean
 coston-clean: ##@Coston	Remove Coston Image
-	$(QUIET) printf "Docker Build\n"
+	$(QUIET) printf "Docker Clean\n"
 	docker rmi dulee/flare-node:coston
 
 .PHONY: songbird-build
@@ -48,21 +58,31 @@ songbird-build: flare-repo ##@Songbird	Build Docker Songbird Node Image
 
 .PHONY: songbird-up
 songbird-up: songbird-build ##@Songbird	Run Docker songbird-node
-	$(QUIET) printf "Docker Build\n"
+	$(QUIET) printf "Docker Up\n"
 	docker-compose -f docker-compose.songbird.yml up -d
+
+.PHONY: songbird-status
+songbird-status:  ##@Songbird	Run Status songbird-node
+	$(QUIET) printf "Docker Status\n"
+	docker-compose -f docker-compose.songbird.yml ps
+
+.PHONY: songbird-logs
+songbird-logs:  ##@Songbird	Run Status songbird-node
+	$(QUIET) printf "Docker Logs\n"
+	docker-compose -f docker-compose.songbird.yml logs -f
 
 .PHONY: songbird-down
 songbird-down: ##@Songbird	Bring Songbird Node Down
-	$(QUIET) printf "Docker Build\n"
+	$(QUIET) printf "Docker Down\n"
 	docker-compose -f docker-compose.songbird.yml down
 
 .PHONY: songbird-clean
 songbird-clean: ##@Songbird	Remove Songbird Image
-	$(QUIET) printf "Docker Build\n"
+	$(QUIET) printf "Docker Clean\n"
 	docker rmi dulee/flare-node:songbird
 
 .PHONY: clean 
-clean: coston-down songbird-down ##@Misc	Remove all src files
+clean: coston-clean songbird-clean ##@Misc	Remove all src files
 	$(QUIET) printf "Cleaning up\n"
 	$(QUIET) printf "Removing the Repo from build/src/flare"
 	$(QUIET) rm -Rvf build/src/flare
