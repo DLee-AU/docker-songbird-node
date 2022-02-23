@@ -1,3 +1,7 @@
+# https://stackoverflow.com/a/36226832
+# PATH  := $(PATH):$(PWD)/bin:/my/other/path
+# SHELL := env PATH=$(PATH) /bin/bash
+
 SHELL := /bin/bash
 QUIET := @
 
@@ -146,3 +150,76 @@ help:: ##@Usage Show this help.
 # $(error AWS_SECRET_ACCESS_KEY, does not exist)
 # endif
 
+# Check for { docker, docker-compose, podman-compose }
+.PHONY: check
+check:  ##@Misc	Check for Applicable Files Exist
+	$(QUIET) \
+	if command -v docker > /dev/null 2>&1 || command -v podman > /dev/null 2>&1; then \
+		if command -v docker > /dev/null 2>&1; then \
+			printf "\e[1;33mDocker\e[0m is \e[1;32mDetected\n\n\e[0m"; \
+		fi; \
+		if command -v podman > /dev/null 2>&1; then \
+			printf "\e[1;33mPodman\e[0m is \e[1;32mDetected\n\n\e[0m"; \
+		fi; \
+	else \
+		printf "\e[1;31mDocker\e[0m is \e[1;31mnot on the system\n\e[0m"; \
+		printf "Please Install\n"; \
+	fi
+	$(QUIET) \
+	if command -v docker-compose > /dev/null 2>&1 || command -v podman-compose > /dev/null 2>&1; then \
+		if command -v docker-compose > /dev/null 2>&1; then \
+			printf "\e[1;33mDocker Compose\e[0m is \e[1;32mDetected\n\n\e[0m"; \
+		fi; \
+		# if command -v podman-compose > /dev/null 2>&1; then \
+		# 	printf "\e[1;33mPodman Compose\e[0m is \e[1;32mDetected\n\n\e[0m"; \
+		# fi; \
+	else \
+		printf "\e[1;31mdocker-compose\e[0m is \e[1;31mnot on the system\n\e[0m"; \
+		printf "\e[1;35mPlease Install\e[0m\n"; \
+	fi
+
+.PHONY: check-quiet
+check-quiet: ##@Coston	Run Docker coston-node
+	$(QUIET) printf "Check Quiet\n"
+
+
+.PHONY: _check-quiet
+_check-quiet:  ##@Misc	Check for Applicable Files Exist
+	$(QUIET) \
+	if command -v docker > /dev/null 2>&1 || command -v podman > /dev/null 2>&1; then \
+		if command -v docker > /dev/null 2>&1; then \
+			# export DOCKER=$(shell which docker) > /dev/null 2>&1; \
+			# export DOCKER=$(shell which docker > /dev/null 2>&1) > /dev/null 2>&1; \
+			# export DOCKER=$(shell which docker 2> /dev/null) > /dev/null 2>&1; \
+			export DOCKER=$(shell which docker); printf "$(DOCKER)"; \
+			# printf "$(shell which docker)\n\n"; \
+		fi; \
+		if command -v podman > /dev/null 2>&1; then \
+			# export DOCKER=$(shell which podman) > /dev/null 2>&1; \
+			# export DOCKER=$(shell which podman > /dev/null 2>&1) > /dev/null 2>&1; \
+			# export DOCKER=$(shell which podman 2> /dev/null) > /dev/null 2>&1; \
+			export DOCKER=$(shell which podman 2> /dev/null); \
+			# printf "$(shell which podman)\n\n"; \
+		fi; \
+	fi
+	$(QUIET) \
+	if command -v docker-compose > /dev/null 2>&1 || command -v podman-compose > /dev/null 2>&1; then \
+		if command -v docker-compose > /dev/null 2>&1; then \
+			# export DOCKER-COMPOSE=$(shell which docker-compose) > /dev/null 2>&1; \
+			# export DOCKER-COMPOSE=$(shell which docker-compose > /dev/null 2>&1) > /dev/null 2>&1; \
+			export DOCKER-COMPOSE=$(shell which docker-compose 2> /dev/null) > /dev/null 2>&1; \
+			# printf "$(shell which docker-compose)\n\n"; \
+		fi; \
+		if command -v podman-compose > /dev/null 2>&1; then \
+			# export DOCKER-COMPOSE=$(shell which podman-compose > /dev/null 2>&1) > /dev/null 2>&1; \
+			# export DOCKER-COMPOSE=$(shell which podman-compose > /dev/null 2>&1); \
+			export DOCKER-COMPOSE=$(shell which podman-compose 2> /dev/null); \
+			# printf "$(shell which podman-compose > /dev/null 2>&1)\n\n"; \
+		fi; \
+	fi
+# ifndef DOCKER
+# 	$(error DOCKER, does not exist)
+# endif
+# ifndef DOCKER-COMPOSE
+# 	$(error DOCKER-COMPOSE, does not exist)
+# endif
