@@ -6,11 +6,10 @@ PODMAN=/usr/bin/podman
 PYTHON_IMAGE=library/python:3.9
 PYTHON=${DOCKER} run ${PYTHON_IMAGE}
 
-# DOCKER-COMPOSE=/usr/bin/docker-compose
-DOCKER-COMPOSE=~/.pyenv/shims/docker-compose
-# PODMAN-COMPOSE=/usr/bin/podman-compose
-PODMAN-COMPOSE=~/.pyenv/shims/podman-compose
-
+DOCKER-COMPOSE=/usr/bin/docker-compose
+# DOCKER-COMPOSE=~/.pyenv/shims/docker-compose
+PODMAN-COMPOSE=/usr/bin/podman-compose
+# PODMAN-COMPOSE=~/.pyenv/shims/podman-compose
 
 # S3 Data Locations and Service
 S3_HOSTNAME="http://s3.url.example"
