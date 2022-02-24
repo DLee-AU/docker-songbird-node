@@ -185,7 +185,7 @@ check-quiet:
 
 
 .PHONY: _check-quiet
-# _check-quiet:  ##@Misc	Check for Applicable Files Exist
+# _check-quiet:  ##@Misc	Check that Applicable Files Exist
 _check-quiet:
 	$(QUIET) \
 	if command -v docker > /dev/null 2>&1 || command -v podman > /dev/null 2>&1; then \

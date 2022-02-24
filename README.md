@@ -12,7 +12,7 @@ Dockerised Songbird Node
 
 To adjust where the location of the log files and the db is located on the host.
 
-You need to change where the `/logs` and `/db` in the contatiner are mapped to.
+You need to change where the `/logs` and `/db` directory locations are mapped to in the container.
 
 To do so just change the `DB_DIR` and `LOG_DIR` in the `./build/.env.<network>` file.
 
