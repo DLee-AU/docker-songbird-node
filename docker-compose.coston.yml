@@ -12,6 +12,8 @@ services:
     ports:
       - 19650:9650
       - 19651:9651
+      # - 9650:9650
+      # - 9651:9651
     # Environment Variables in the Container
     environment:
       - FLARE_NETWORK_ID=${FLARE_NETWORK_ID:-coston}

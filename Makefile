@@ -110,7 +110,7 @@ s3-setup: ##@S3	Setup S3 (Planned)
 	$(QUIET) printf "\e[1;33m... SETUP TO FOLLOW ...\e[0m\n"
 
 .PHONY: s3-bootstrap
-s3-bootstrap: ##@S3	Copy Databasefiles from S3 Source (Planned)
+s3-bootstrap: ##@S3	Copy Database files from S3 Source (Planned)
 	$(QUIET) printf "\e[1;32mDownload (sync) DB from S3 Location ${S3_URL}\e[0m\n"
 	$(QUIET) printf "\e[1;33mDownloading (syncing) to File Location:\e[0m\n"
 

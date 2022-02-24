@@ -109,7 +109,7 @@ If in doubt run `make` and it should be self documenting
                               S3:
 
                         s3-setup  Setup S3 (Planned)
-                    s3-bootstrap  Copy Databasefiles from S3 Source (Planned)
+                    s3-bootstrap  Copy Database files from S3 Source (Planned)
 
                         Songbird:
 
@@ -159,6 +159,11 @@ If you want to bring it down
 
     > make songbird-down
       ...
+
+
+# Known Issues
+
+# FAQ
 
 # Notes
 
