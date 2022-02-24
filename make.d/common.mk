@@ -179,12 +179,14 @@ check:  ##@Misc	Check for Applicable Files Exist
 	fi
 
 .PHONY: check-quiet
-check-quiet: ##@Coston	Run Docker coston-node
+# check-quiet: ##@Coston	Run Docker coston-node
+check-quiet:
 	$(QUIET) printf "Check Quiet\n"
 
 
 .PHONY: _check-quiet
-_check-quiet:  ##@Misc	Check for Applicable Files Exist
+# _check-quiet:  ##@Misc	Check for Applicable Files Exist
+_check-quiet:
 	$(QUIET) \
 	if command -v docker > /dev/null 2>&1 || command -v podman > /dev/null 2>&1; then \
 		if command -v docker > /dev/null 2>&1; then \

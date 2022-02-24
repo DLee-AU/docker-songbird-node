@@ -16,3 +16,6 @@ PODMAN-COMPOSE=~/.pyenv/shims/podman-compose
 S3_HOSTNAME="http://s3.url.example"
 S3_URI="s3-bucket-example"
 S3_URL=$(S3_HOSTNAME)/$(S3_URI)
+
+COSTON_ENV_FILE=./build/.env.coston
+SONGBIRD_ENV_FILE=./build/.env.songbird

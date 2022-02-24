@@ -12,22 +12,24 @@ services:
     ports:
       - 19650:9650
       - 19651:9651
+    # Environment Variables in the Container
     environment:
       - FLARE_NETWORK_ID=${FLARE_NETWORK_ID:-coston}
       # - HTTP_HOST=${HTTP_HOST:-0.0.0.0}
       - LISTEN_ADDRESS=0.0.0.0
       - BOOTSTRAP_IPS=${BOOTSTRAP_IPS:-}
       - BOOTSTRAP_IDS=${BOOTSTRAP_IDS:-}
-      - DB_DIR=${DB_DIR:-/db}
-      - LOG_DIR=${LOG_DIR:-/logs}
+      - DB_DIR=/db
+      - LOG_DIR=/logs
       - CHAIN_CONFIG_DIR=${CHAIN_CONFIG_DIR:-/app/.flare/configs}
       - LOG_LEVEL=${LOG_LEVEL:-INFO}
     build:
       context: build
       dockerfile: Dockerfile.coston
+    # Env Variable from outside the container, i.e. SHELL Variables
     env_file:
       - ./build/.env.coston
     volumes:
-      - ${PWD}/db:/db
-      - ${PWD}/logs:/logs
+      - ${DB_DIR:-./db}:/db
+      - ${LOG_DIR:-./logs}/logs:/logs
       - ${PWD}/configs/coston:/app/.flare/configs
